@@ -1,0 +1,31 @@
+# txAdmin recipe for CIVITAS starter pack (manual seed)
+# After cloning, copy resources into your server's resources folder under a folder like resources/civitas
+
+steps:
+  - name: Clone repository
+    run: |
+      git clone https://github.com/EnReality/Civitas.git civitas
+
+  - name: Copy resources
+    run: |
+      mkdir -p resources/civitas
+      cp -r civitas/* resources/civitas/
+
+  - name: Ensure resource order
+    run: |
+      # Ensure the following order in your server.cfg or txAdmin resource startup
+      echo "ensure civitas-core" > install_instructions.txt
+      echo "ensure civitas-organizations" >> install_instructions.txt
+      echo "ensure civitas-access" >> install_instructions.txt
+      echo "ensure civitas-assets" >> install_instructions.txt
+      echo "ensure civitas-admin" >> install_instructions.txt
+      echo "ensure civitas-duty" >> install_instructions.txt
+      echo "ensure civitas-duty-blips" >> install_instructions.txt
+      echo "ensure civitas-starter" >> install_instructions.txt
+
+  - name: Manual seed reminder
+    run: |
+      echo "After starting the server, run /civitas_seed from console or an allowed admin account to apply starter seeds." >> install_instructions.txt
+
+outputs:
+  - install_instructions.txt
